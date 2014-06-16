@@ -1,7 +1,7 @@
-from django.contrib import admin
+from django.contrib.gis import admin
 from models import *
 
-class CitiesAdmin(admin.ModelAdmin):
+class CitiesAdmin(admin.GeoModelAdmin):
     raw_id_fields = ['alt_names']
 
 class CountryAdmin(CitiesAdmin):
