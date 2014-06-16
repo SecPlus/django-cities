@@ -47,7 +47,7 @@ class Country(Place):
     tld = models.CharField(max_length=5, verbose_name=_(u"TLD"))
     capital = models.CharField(max_length=100, verbose_name=_(u"Capital"))
     neighbours = models.ManyToManyField("self", verbose_name=_(u"Neighbours"))
-    boundary = models.MultiPolygonField(verbose_name=_(u"Boundaries"))
+    boundary = models.MultiPolygonField(verbose_name=_(u"Boundaries"), null=True)
 
     objects = models.GeoManager()
 
@@ -66,7 +66,7 @@ class Region(Place):
     name_std = models.CharField(max_length=200, db_index=True, verbose_name="Standard name")
     code = models.CharField(max_length=200, db_index=True)
     country = models.ForeignKey(Country, verbose_name=_(u"Country"))
-    boundary = models.MultiPolygonField(verbose_name=_(u"Boundaries"))
+    boundary = models.MultiPolygonField(verbose_name=_(u"Boundaries"), null=True)
 
     objects = models.GeoManager()
 
@@ -81,7 +81,7 @@ class Subregion(Place):
     name_std = models.CharField(max_length=200, db_index=True, verbose_name="standard name")
     code = models.CharField(max_length=200, db_index=True)
     region = models.ForeignKey(Region)
-    boundary = models.MultiPolygonField(verbose_name=_(u"Boundaries"))
+    boundary = models.MultiPolygonField(verbose_name=_(u"Boundaries"), null=True)
 
     objects = models.GeoManager()
 
@@ -102,7 +102,7 @@ class City(Place):
     elevation = models.IntegerField(null=True)
     kind = models.CharField(max_length=10) # http://www.geonames.org/export/codes.html
     timezone = models.CharField(max_length=40)
-    boundary = models.MultiPolygonField(verbose_name=_(u"Boundaries"))
+    boundary = models.MultiPolygonField(verbose_name=_(u"Boundaries"), null=True)
 
     objects = models.GeoManager()
 
@@ -118,7 +118,7 @@ class District(Place):
     location = models.PointField()
     population = models.IntegerField()
     city = models.ForeignKey(City)
-    boundary = models.MultiPolygonField(verbose_name=_(u"Boundaries"))
+    boundary = models.MultiPolygonField(verbose_name=_(u"Boundaries"), null=True)
 
     objects = models.GeoManager()
 
@@ -132,7 +132,6 @@ class AlternativeName(models.Model):
     is_preferred = models.BooleanField(default=False)
     is_short = models.BooleanField(default=False)
     is_colloquial = models.BooleanField(default=False)
-    boundary = models.MultiPolygonField(verbose_name=_(u"Boundaries"))
 
     objects = models.GeoManager()
 
@@ -149,7 +148,7 @@ class PostalCode(Place):
     region_name = models.CharField(max_length=100, db_index=True)
     subregion_name = models.CharField(max_length=100, db_index=True)
     district_name = models.CharField(max_length=100, db_index=True)
-    boundary = models.MultiPolygonField(verbose_name=_(u"Boundaries"))
+    boundary = models.MultiPolygonField(verbose_name=_(u"Boundaries"), null=True)
 
     objects = models.GeoManager()
 
